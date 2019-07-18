@@ -2,6 +2,8 @@ package com.fcant;
 
 import com.fcant.client.Thick;
 
+import java.io.IOException;
+
 /**
  * Main
  * <p>
@@ -13,11 +15,8 @@ import com.fcant.client.Thick;
  */
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Thick thick = new Thick();
-        double[] thickData = thick.getThickData();
-        for (int i = 0; i < thickData.length; i++) {
-            System.out.println(thickData[i]);
-        }
+        thick.saveDataToTxt(thick.getThickData());
     }
 }
