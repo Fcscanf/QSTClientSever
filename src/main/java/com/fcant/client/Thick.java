@@ -1,8 +1,12 @@
 package com.fcant.client;
+
 import com.fcant.util.FcantUtils;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.Socket;
 
 /**
  * Thick
@@ -35,7 +39,7 @@ public class Thick {
      * 保存从测厚仪提取的数据到文本
      *
      * @author Fcscanf
-     * @date 下午 13:57 2019-07-18/0018 
+     * @date 下午 13:57 2019-07-18/0018
      */
     public void saveDataToTxt(double[] data) throws IOException {
         String filePath = FcantUtils.checkFileExist("data.txt");
@@ -49,4 +53,24 @@ public class Thick {
         fileWriter.close();
     }
 
+    public void sendDataBySocket(double[] data) throws IOException {
+        try {
+            Socket socket = new Socket("0.0.0.0", 6666);
+            //根据输入输出流和服务端连接
+            OutputStream outputStream = socket.getOutputStream();
+            //获取一个输出流，向服务端发送信息
+            PrintWriter printWriter = new PrintWriter(outputStream);
+            //将输出流包装成打印流
+            for (int i = 0; i < data.length; i++) {
+                printWriter.print(data[i] + " ");
+            }
+            printWriter.print("\n");
+            printWriter.flush();
+            socket.shutdownOutput();
+            printWriter.close();
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
