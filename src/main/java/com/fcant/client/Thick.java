@@ -53,6 +53,13 @@ public class Thick {
         fileWriter.close();
     }
 
+    /**
+     * 通过Socket发送数据给服务端
+     *
+     * @param data
+     * @author Fcscanf
+     * @date 上午 8:13 2019-07-19/0019
+     */
     public void sendDataBySocket(double[] data) throws IOException {
         try {
             Socket socket = new Socket("0.0.0.0", 6666);
